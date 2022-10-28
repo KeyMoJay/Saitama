@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./iconfont//iconfont.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="./static/index.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- search模块 -->
+        <template>
+            <search-item :holder="holder">
+                <span class="iconfont icon-sousuo icon"></span>
+            </search-item>
+        </template>
+
+        <!-- nav模块 -->
+        <nav>
+            <div v-for="item in navList" :key="item.id">
+                <template>
+                    <nav-item :title="item.title">
+                        <span :class="item.icon" style="font-size: 80px;"></span>
+                    </nav-item>
+                </template>
+            </div>
+        </nav>
+
+        <!-- job模块 -->
+        <section class="job-list">
+            <h3 class="job-title">时间<span class="iconfont icon-paixu order"></span></h3>
+            <div>
+                <job-item v-for="item in jobList" :key="item.id" :name="item.jobName" :publish="item.publishTime" :jobtime="item.jobTime"
+                    :place="item.jobPlace" :contact="item.contact"></job-item>
+            </div>
+        </section>
+
+        <!-- 底部导航模块 -->
+        <div class="nav-bottom">
+            <a href="javascript:;"><span class="iconfont icon-gongzuo"></span><p>工作</p><i class="new">new</i></a>
+            <a href="javascript:;"><span class="iconfont icon-xiaoxi"></span><p>消息</p></a>
+            <a href="javascript:;"><span class="iconfont icon-31wode"></span><p>我的</p></a>
+        </div>
+    </div>
+    <script>
+        //全局注册 search nav job 三个模块的组件
+        //封装seacrch模块的search-item组件
+        Vue.component('search-item', {
+            props: ['holder'],
+            template: '<div class="input-box"><slot>123</slot><input type="search" :placeholder="holder" class="ipt"></div>'
+        })
+        //封装nav模块的nav-item组件
+        Vue.component('nav-item', {
+            props: ['title'],
+            template: ' <a href="javascript:;" style="float: left;height: 16vh;width: 33.3vw;background-color: #fff;text-align: center;font-size: 12px"><slot></slot><h3>{{title}}</h3></a>',
+        })
+        //封装job模块的job-item组件
+        Vue.component('job-item', {
+            props: ['name', 'publish', 'jobtime', 'place', 'contact'],
+            template: ' <div class="my-padding"><p class="item-title"><b>{{name}}</b><b>{{publish}}</b></p><p>工作时长: <span>{{jobtime}}</span></p><p>工作地点: <span>{{place}}</span></p><p class="p-last">联系人:<span id="single">{{contact}}</span><a href="javascript:;">点击了解</a></p></div>'
+
+        })
+
+        //在app标签中挂载，并渲染组件
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                holder: '搜索输入时间、地点',
+                navList: [
+                    {
+                        id: 1,
+                        title: '时间',
+                        icon: 'iconfont icon-shijian'
+                    },
+                    {
+                        id: 2,
+                        title: '地点',
+                        icon: 'iconfont icon-didian'
+                    },
+                    {
+                        id: 3,
+                        title: '岗位',
+                        icon: 'iconfont icon-renshizhiye'
+                    }
+                ],
+                jobList: [
+                {
+                    id: 1,
+                    jobName: '图书管理员',
+                    publishTime: '2022-08-12',
+                    jobTime: '4小时/天',
+                    jobPlace: '第一图书馆',
+                    contact: '第一图书馆办公室'
+                },
+                {
+                    id: 2,
+                    jobName: '学校社区工作',
+                    publishTime: '2022-08-10',
+                    jobTime: '2小时/天',
+                    jobPlace: '学生社区中心',
+                    contact: '学生社区中心办公室'
+                },
+                {
+                    id: 3,
+                    jobName: '办公室助理',
+                    publishTime: '2022-08-08',
+                    jobTime: '4小时/天',
+                    jobPlace: '计算机学院',
+                    contact: '计算机学院办公室'
+                }
+            ]
+            },
+           
+        })
+
+    </script>
+</body>
+
+</html>
